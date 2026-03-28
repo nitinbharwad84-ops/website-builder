@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --background: #000000;
   --foreground: #ffffff;
@@ -8,7 +12,7 @@
   --border: #222222;
   --input: #1a1a1a;
   
-  --primary: #5b21b6; /* Deep Purple */
+  --primary: #7c3aed; /* Deep Purple */
   --primary-glow: #8b5cf6;
   --primary-foreground: #ffffff;
   
@@ -23,89 +27,46 @@
 
   --ring: #8b5cf6;
   
-  --radius: 0.75rem;
+  --radius: 1rem;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
 }
 
-body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-/* Glassmorphism utility */
 .glass {
-  background: rgba(10, 10, 10, 0.4);
+  background: rgba(124, 58, 237, 0.05);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(124, 58, 237, 0.1);
 }
 
-/* Buttons utility */
+.purple-glow {
+  box-shadow: 0 0 50px -12px rgba(124, 58, 237, 0.25);
+}
+
 .btn-primary {
-  background: linear-gradient(135deg, var(--primary), var(--primary-glow));
-  color: var(--primary-foreground);
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--radius);
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
-.btn-primary:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+  @apply bg-gradient-to-r from-primary to-primary-glow text-primary-foreground px-6 py-3 rounded-xl font-semibold shadow-lg hover:opacity-90 transform transition-transform hover:-translate-y-px active:translate-y-0.5;
 }
 
 .btn-secondary {
-  background: var(--secondary);
-  color: var(--secondary-foreground);
-  border: 1px solid var(--border);
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--radius);
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+  @apply bg-secondary text-secondary-foreground px-6 py-3 rounded-xl border border-border font-semibold hover:bg-accent transition-colors;
 }
 
-.btn-secondary:hover {
-  background: var(--accent);
-}
-
-/* Scrollbar styling */
+/* Custom scrollbar for a premium look */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--background);
+  @apply bg-background;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
+  @apply bg-neutral-900 rounded-full border-2 border-background hover:bg-primary transition-colors;
 }

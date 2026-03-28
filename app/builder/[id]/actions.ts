@@ -1,30 +1,31 @@
 "use server"
 
 import { createClient } from "@/utils/supabase/server"
+import { revalidatePath } from "next/cache"
 
-export async function saveProject(projectId: string, content: Record<string, unknown>, isPublished: boolean = false) {
+export async function saveProject(projectId: string, content: any, isPublished = false) {
   const supabase = createClient()
-  
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {
-    throw new Error('Not authenticated')
+    throw new Error("Unauthorized")
   }
 
   const { error } = await supabase
-    .from('projects')
+    .from("projects")
     .update({ 
       content, 
       is_published: isPublished,
       updated_at: new Date().toISOString()
     })
-    .eq('id', projectId)
-    .eq('user_id', user.id)
+    .eq("id", projectId)
+    .eq("user_id", user.id)
 
   if (error) {
     console.error("Save error:", error)
-    return { success: false, error: error.message }
+    throw new Error("Failed to save project")
   }
 
-  return { success: true }
+  revalidatePath(`/builder/${projectId}`)
+  revalidatePath("/dashboard")
 }

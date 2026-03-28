@@ -24,7 +24,7 @@ export async function POST(req: Request) {
       })
     }
 
-    const systemPrompt = `You are a strict JSON builder for a drag-and-drop website editor.
+    const systemPrompt = `You are a strict JSON builder for a drag-and-drop website editor called SiteForge AI.
     Do NOT return markdown framing or commentary.
     Return ONLY raw JSON in this EXACT schema:
     {
@@ -42,6 +42,8 @@ export async function POST(req: Request) {
     "features" -> feature1Title, feature1Desc, feature2Title, feature2Desc
     "cta" -> headline, buttonText
     "text" -> content.
+
+    Style Guide: The user is building a PREMIUM SaaS website. The language and copy should be professional, evocative, architectural, and sophisticated. Avoid generic filler.
 
     Based on the user's prompt, generate an array of up to 4 blocks that represents their requested website layout.`
 
@@ -70,6 +72,7 @@ export async function POST(req: Request) {
     const jsonContent = JSON.parse(data.choices[0].message.content)
 
     return NextResponse.json(jsonContent)
+
   } catch (error: unknown) {
     console.error("AI Generation API Error:", error)
     return NextResponse.json({ error: error instanceof Error ? error.message : "Unknown error" }, { status: 500 })
