@@ -23,7 +23,7 @@ import {
   LayoutTemplate
 } from "lucide-react";
 import Link from "next/link";
-import { saveProject } from "./actions";
+import { saveProject } from "@/app/builder/[id]/actions";
 
 export type BlockType = "hero" | "features" | "cta" | "text";
 
