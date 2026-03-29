@@ -1,5 +1,5 @@
 import { login, signup } from "./actions";
-import { ArrowLeft, LayoutTemplate, Github, Mail, Lock, ShieldCheck } from "lucide-react";
+import { ArrowLeft, LayoutTemplate, Mail, Lock } from "lucide-react";
 import Link from "next/link";
 
 export default function LoginPage({
