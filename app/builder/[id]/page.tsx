@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { notFound, redirect } from "next/navigation";
-import BuilderClient from "./BuilderClient";
+import BuilderClient from "@/app/builder/[id]/BuilderClient";
 
 export const dynamic = "force-dynamic";
 
