@@ -2,22 +2,22 @@ import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import { Plus, FolderOpen, LayoutTemplate, Settings, ExternalLink, MoreVertical, LogOut, User } from "lucide-react";
 import Link from "next/link";
-import { createProject, signOut } from "./actions";
+import { createProject } from "./actions";
+
+const GUEST_ID = "00000000-0000-0000-0000-000000000000";
 
 export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
   const supabase = createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect("/login");
-  }
+  
+  // Guest Mode: Using a hardcoded ID instead of auth.getUser()
+  const userId = GUEST_ID;
 
   const { data: projects } = await supabase
     .from("projects")
     .select("*")
-    .eq("user_id", user.id)
+    .eq("user_id", userId)
     .order("created_at", { ascending: false });
 
   const activeCount = projects?.length || 0;
@@ -54,15 +54,9 @@ export default async function DashboardPage() {
               <User className="w-4 h-4 text-primary" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-medium truncate text-neutral-300">{user.email}</p>
+              <p className="text-xs font-medium truncate text-neutral-300 italic">Guest Architect</p>
             </div>
           </div>
-          <form action={signOut}>
-            <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-destructive/10 text-neutral-400 hover:text-destructive transition-all">
-              <LogOut className="w-5 h-5" />
-              Sign Out
-            </button>
-          </form>
         </div>
       </aside>
 

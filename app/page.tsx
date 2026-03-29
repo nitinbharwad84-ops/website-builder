@@ -33,8 +33,8 @@ export default function LandingPage() {
           <Link href="#pricing" className="hover:text-white transition-colors">Pricing</Link>
         </div>
         <div>
-          <Link href="/dashboard" className="btn-secondary !py-2 !px-5 text-sm">
-            Sign In
+          <Link href="/dashboard" className="btn-secondary !py-2 !px-5 text-sm uppercase tracking-widest font-black">
+            Enter Workspace
           </Link>
         </div>
       </nav>
@@ -145,7 +145,7 @@ export default function LandingPage() {
               Join 10,000+ creators building the next generation of the web with SiteForge AI. No credit card required.
             </p>
             <Link href="/dashboard" className="btn-primary px-12 py-5 text-xl font-black">
-              Start Free Today
+              Start Building Now
             </Link>
           </div>
         </section>

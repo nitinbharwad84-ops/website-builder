@@ -1,14 +1,14 @@
-"use server";
-
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+const GUEST_ID = "00000000-0000-0000-0000-000000000000";
+
 export async function createProject() {
   const supabase = createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  if (!user) return;
+  
+  // Guest Mode: Using constant ID instead of auth.getUser()
+  const userId = GUEST_ID;
 
   const name = "Untitled Vision";
   const slug = `vision-${Math.random().toString(36).substring(7)}`;
@@ -17,7 +17,7 @@ export async function createProject() {
     .from("projects")
     .insert([
       {
-        user_id: user.id,
+        user_id: userId,
         name,
         slug,
         content: { blocks: [] },
@@ -33,10 +33,4 @@ export async function createProject() {
 
   revalidatePath("/dashboard");
   redirect(`/builder/${data.id}`);
-}
-
-export async function signOut() {
-  const supabase = createClient();
-  await supabase.auth.signOut();
-  redirect("/login");
 }

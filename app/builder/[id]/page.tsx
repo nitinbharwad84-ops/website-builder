@@ -6,12 +6,8 @@ export const dynamic = "force-dynamic";
 
 export default async function BuilderPage({ params }: { params: { id: string } }) {
   const supabase = createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect("/login");
-  }
-
+  
+  // Guest Mode: No auth check
   const { data: project } = await supabase
     .from("projects")
     .select("*")
@@ -20,10 +16,6 @@ export default async function BuilderPage({ params }: { params: { id: string } }
 
   if (!project) {
     notFound();
-  }
-
-  if (project.user_id !== user.id) {
-    redirect("/dashboard");
   }
 
   return <BuilderClient project={project} />;
